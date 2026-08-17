@@ -1,0 +1,30 @@
+customers:
+  required_columns: [customer_id,city,signup_date]
+  key_columns: [customer_id]
+
+products:
+  required_columns: [product_id,category_id,supplier_id,price]
+  key_columns: [product_id]
+
+orders:
+  required_columns: [order_id,customer_id,store_id,order_date,promotion_id]
+  key_columns: [order_id]
+
+order_items:
+  required_columns: [order_item_id,order_id,product_id,qty,price]
+  key_columns: [order_item_id]
+
+payments:
+  required_columns: [payment_id,order_id,amount]
+  key_columns: [payment_id]
+
+shipments:
+  required_columns: [shipment_id,order_id,status]
+  key_columns: [shipment_id]
+
+returns:
+  required_columns: [return_id,order_item_id,refund]
+  key_columns: [return_id]
+
+
+
