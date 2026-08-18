@@ -57,7 +57,7 @@ def check_referential_integrity(child_df:DataFrame,parent_table:str,fk_col:str,p
     pk_col=pk_col or fk_col
     valid_keys=spark.read.table(parent_table).select(pk_col).distinct()
     before=child_df.count()
-    result=child_df.join(F.broadcast(valid_keys),child_df[fk_col]==valid_keys[pk_col],"inner")
+    result=(child_df.join(F.broadcast(valid_keys),child_df[fk_col]==valid_keys[pk_col],"inner").select(child_df["*"]))
     after=result.count()
     logger.info(f"{table_name}: {before} -> {after} rows after FK check on {fk_col}")
     return result
