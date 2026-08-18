@@ -18,13 +18,12 @@ def transform_customers()->None:
             .filter(F.col("row_num")==1)
             .drop("row_num")
             .withColumn("signup_date",F.to_date("signup_date"))
-    ).cache()
+    )
 
     final_count=df.count()
     logger.info(f"customers: {initial_count}->{final_count} rows after dedup+filter")
 
     df.write.format("delta").mode("overwrite").saveAsTable(SILVER_TABLES["customers"])
-    df.unpersist()
 
 def transform_products()->None:
     df=spark.read.table(BRONZE_TABLES["products"])
@@ -38,14 +37,13 @@ def transform_products()->None:
             .drop("row_num")
             .filter(F.col("price")>0)
             .withColumn("price",F.col("price").cast(DecimalType(10,2)))
-    ).cache()
+    )
 
     final_count=df.count()
     logger.info(f"products: {initial_count}->{final_count} rows after dedup+filter")
 
     df.write.format("delta").mode("overwrite").saveAsTable(SILVER_TABLES["products"])
-    df.unpersist()
-
+    
 def transform_orders()->None:
     df=spark.read.table(BRONZE_TABLES["orders"])
     initial_count=df.count()
