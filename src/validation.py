@@ -1,6 +1,8 @@
-from pyspark.sql import DataFrame
+from pyspark.sql import DataFrame,SparkSession
 from pyspark.sql import functions as F
 from utils.logging_config import get_logger
+
+spark = SparkSession.builder.getOrCreate()
 
 logger=get_logger(__name__)
 
